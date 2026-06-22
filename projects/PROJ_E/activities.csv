@@ -1,0 +1,7 @@
+activity_id,activity_name,wbs_id,planned_start,planned_finish,actual_start,actual_finish,forecast_start,forecast_finish,planned_progress,actual_progress,planned_weight,total_float_days,is_critical,responsible_party
+E-101,Mobilization & Shaft Setup,1.1,2025-05-01,2025-06-15,2025-05-01,2025-06-20,2025-05-01,2025-06-25,85,70,8,-10,Yes,Contractor
+E-102,Shaft Excavation,2.1,2025-06-15,2025-08-15,2025-06-20,2025-09-05,2025-06-20,2025-09-15,65,45,16,-31,Yes,Contractor
+E-103,Tunnel Boring,2.2,2025-08-15,2025-12-15,2025-09-05,,2025-09-05,2026-01-20,45,25,22,-36,Yes,Contractor
+E-104,Tunnel Lining,3.1,2025-12-15,2026-04-15,,,2026-01-20,2026-05-30,30,12,18,-45,Yes,Contractor
+E-105,MEP & Systems,3.2,2026-04-15,2026-07-15,,,2026-05-30,2026-09-15,18,5,14,-62,Yes,Contractor
+E-106,Finishing & Testing RFT,4.1,2026-07-15,2026-10-31,,,2026-09-15,2026-12-31,8,2,10,-61,No,Contractor

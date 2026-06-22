@@ -1,0 +1,7 @@
+activity_id,activity_name,wbs_id,planned_start,planned_finish,actual_start,actual_finish,forecast_start,forecast_finish,planned_progress,actual_progress,planned_weight,total_float_days,is_critical,responsible_party
+C-101,Mobilization & Logistics,1.1,2025-08-15,2025-09-05,2025-08-15,2025-09-10,2025-08-15,2025-09-10,100,95,6,-5,Yes,Contractor
+C-102,Pile Foundations,2.1,2025-09-05,2025-10-25,2025-09-10,2025-11-05,2025-09-10,2025-11-10,75,60,15,-16,Yes,Contractor
+C-103,Pier Construction,2.2,2025-10-25,2026-01-10,2025-11-05,,2025-11-05,2026-01-30,60,45,18,-20,Yes,Contractor
+C-104,Deck Construction,3.1,2026-01-10,2026-03-20,,,2026-01-30,2026-04-15,45,30,20,-26,Yes,Contractor
+C-105,Bridge Systems,3.2,2026-03-20,2026-05-20,,,2026-04-15,2026-06-30,30,18,14,-41,Yes,Contractor
+C-106,Finishing & Testing RFT,4.1,2026-05-20,2026-07-31,,,2026-06-30,2026-09-15,15,5,10,-46,No,Contractor

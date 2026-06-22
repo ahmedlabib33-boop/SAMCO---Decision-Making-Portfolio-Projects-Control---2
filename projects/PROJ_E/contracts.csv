@@ -1,0 +1,2 @@
+contract_id,package,contractor,contract_type,original_value,approved_variations,pending_variations,paid_to_date,retention_percent,status
+CTR-401,Tunnel Works,Contractor G,Lump Sum,320000000,5000000,1200000,68000000,5,Active

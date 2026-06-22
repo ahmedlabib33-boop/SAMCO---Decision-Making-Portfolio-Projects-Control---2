@@ -1,0 +1,2 @@
+contract_id,package,contractor,contract_type,original_value,approved_variations,pending_variations,paid_to_date,retention_percent,status
+CTR-101,Road Works,Contractor C,Lump Sum,145000000,800000,200000,51000000,5,Active

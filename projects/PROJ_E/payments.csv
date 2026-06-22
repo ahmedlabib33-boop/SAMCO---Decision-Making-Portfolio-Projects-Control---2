@@ -1,0 +1,5 @@
+payment_id,contract_id,invoice_no,invoice_date,certified_amount,paid_amount,payment_status
+PAY-401,CTR-401,INV-601,2025-07-31,20000000,20000000,Paid
+PAY-402,CTR-401,INV-602,2025-10-30,28000000,27000000,Partially Paid
+PAY-403,CTR-401,INV-603,2026-01-31,22000000,16000000,Partially Paid
+PAY-404,CTR-401,INV-604,2026-04-30,12000000,5000000,Unpaid

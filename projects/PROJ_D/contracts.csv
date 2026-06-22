@@ -1,0 +1,2 @@
+contract_id,package,contractor,contract_type,original_value,approved_variations,pending_variations,paid_to_date,retention_percent,status
+CTR-301,Maintenance & Upgrades,Contractor F,Lump Sum,78000000,300000,50000,21000000,5,Active

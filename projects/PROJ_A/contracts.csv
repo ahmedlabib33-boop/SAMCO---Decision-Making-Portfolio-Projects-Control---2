@@ -1,0 +1,3 @@
+contract_id,package,contractor,contract_type,original_value,approved_variations,pending_variations,paid_to_date,retention_percent,status
+CTR-001,Main Works,Contractor A,Lump Sum,219786025,1200000,350000,78400000,5,Active
+CTR-002,MEP Works,Contractor B,Unit Price,45000000,250000,75000,28000000,5,Active

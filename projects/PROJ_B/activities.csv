@@ -1,0 +1,7 @@
+activity_id,activity_name,wbs_id,planned_start,planned_finish,actual_start,actual_finish,forecast_start,forecast_finish,planned_progress,actual_progress,planned_weight,total_float_days,is_critical,responsible_party
+B-101,Mobilization & Setup,1.1,2026-01-01,2026-01-15,2026-01-01,2026-01-14,2026-01-01,2026-01-14,100,100,5,1,No,Contractor
+B-102,Earthworks,2.1,2026-01-15,2026-02-20,2026-01-14,2026-02-18,2026-01-14,2026-02-18,100,100,10,2,No,Contractor
+B-103,Sub-base Preparation,2.2,2026-02-20,2026-03-20,2026-02-18,2026-03-18,2026-02-18,2026-03-18,100,100,12,2,No,Contractor
+B-104,Paving Operations,3.1,2026-03-20,2026-05-10,2026-03-18,,2026-03-18,2026-05-08,65,70,18,2,No,Contractor
+B-105,Surface Course,3.2,2026-05-10,2026-06-20,,,2026-05-08,2026-06-18,50,55,15,2,No,Contractor
+B-106,Finishing & Marking RFT,4.1,2026-06-20,2026-07-31,,,2026-06-18,2026-07-29,30,35,10,2,No,Contractor

@@ -1,0 +1,8 @@
+activity_id,activity_name,wbs_id,planned_start,planned_finish,actual_start,actual_finish,forecast_start,forecast_finish,planned_progress,actual_progress,planned_weight,total_float_days,is_critical,responsible_party
+A-101,Project Mobilization,1.1,2025-09-11,2025-09-25,2025-09-11,2025-09-26,2025-09-11,2025-09-26,100,100,5,0,No,Contractor
+A-102,Site Preparation,1.2,2025-09-26,2025-10-15,2025-09-26,2025-10-18,2025-09-26,2025-10-18,100,95,8,-3,Yes,Contractor
+A-103,Foundation Excavation,2.1,2025-10-15,2025-11-10,2025-10-16,2025-11-15,2025-10-16,2025-11-20,80,65,12,-10,Yes,Contractor
+A-104,Structural Frame,2.2,2025-11-10,2026-01-20,2025-11-16,,2025-11-16,2026-02-05,60,45,15,-16,Yes,Contractor
+A-105,MEP Installation,3.1,2026-01-20,2026-03-15,,,2026-02-05,2026-04-10,30,15,10,-26,Yes,Contractor
+A-106,Finishing Works,3.2,2026-03-15,2026-05-15,,,2026-04-10,2026-06-20,20,8,10,-36,Yes,Contractor
+A-107,External Works RFT,4.1,2026-05-15,2026-07-15,,,2026-06-20,2026-08-20,10,3,8,-36,No,Contractor

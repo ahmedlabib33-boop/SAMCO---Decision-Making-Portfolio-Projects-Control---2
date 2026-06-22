@@ -1,0 +1,11 @@
+Drop your logo file here, named exactly one of:
+
+    logo.png
+    logo.jpg
+    logo.jpeg
+    logo.svg
+
+It will automatically appear in the header banner beside "SAMCO – Project
+Intelligence Hub" the next time the app reloads (no code changes needed).
+If no logo file is found here, the app falls back to the built-in SAMCO
+wordmark.

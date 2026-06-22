@@ -1,0 +1,7 @@
+wbs_code,wbs_name,schedule_pct,performance_pct
+1.1,Mobilization & Planning,100,100
+2.1,Inspection & Assessment,90,92
+2.2,Repair Works,75,78
+3.1,Upgrade Works,55,58
+3.2,Testing & Commissioning,35,38
+4.1,Final Handover,15,18
