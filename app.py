@@ -29,66 +29,6 @@ from sample_data_generator import generate_sample_data
 # ----------------------------------------------------------------------
 
 st.set_page_config(page_title="SAMCO – Project Intelligence Hub", page_icon="🏗️", layout="wide")
-
-# --- Inject custom CSS for filter buttons and date inputs ---
-st.markdown("""
-<style>
-    /* Popover filter buttons */
-    .stPopoverButton {
-        background: rgba(30, 41, 59, 0.6) !important;
-        border: 1px solid rgba(148, 163, 184, 0.2) !important;
-        border-radius: 8px !important;
-        color: #e2e8f0 !important;
-        padding: 5px 12px !important;
-        font-size: 0.7rem !important;
-        font-weight: 500 !important;
-        font-family: 'Inter', sans-serif !important;
-        width: 100%;
-        text-align: left !important;
-        transition: all 0.2s ease !important;
-        line-height: 1.4 !important;
-    }
-    .stPopoverButton:hover {
-        background: rgba(30, 41, 59, 0.8) !important;
-        border-color: #2563EB !important;
-    }
-    .stPopoverButton:focus-visible {
-        outline: 2px solid #2563EB !important;
-        outline-offset: 2px !important;
-    }
-    /* Date inputs */
-    .stDateInput input {
-        background: rgba(15, 23, 42, 0.6) !important;
-        border: 1px solid rgba(148, 163, 184, 0.2) !important;
-        border-radius: 8px !important;
-        color: #e2e8f0 !important;
-        padding: 5px 8px !important;
-        font-size: 0.7rem !important;
-        font-family: 'Inter', sans-serif !important;
-        width: 100% !important;
-    }
-    .stDateInput input:focus {
-        border-color: #2563EB !important;
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
-    }
-    /* Filter group labels */
-    .filter-group label {
-        font-size: 0.65rem !important;
-        font-weight: 600 !important;
-        color: #94a3b8 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.6px !important;
-        margin-bottom: 2px !important;
-        display: block !important;
-    }
-    .filter-group {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-    }
-</style>
-""", unsafe_allow_html=True)
-
 st.markdown(sty.CSS, unsafe_allow_html=True)
 st.markdown(
     '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">',
@@ -383,13 +323,14 @@ def render_table_or_empty(df: pd.DataFrame, title: str, hint: str):
 # ----------------------------------------------------------------------
 
 def checkbox_filter_popover(label: str, options: list, state_key: str, value_labels: dict | None = None) -> list:
-    """A compact filter control: click to open a popover of checkboxes.
-    Label includes a dropdown arrow ▼."""
+    """A compact filter control: click to open a popover of checkboxes,
+    pick any number, the popover closes on its own when you click away
+    ('the list vanishes') and the trigger button only ever shows a count
+    - it never re-fills with the chosen values as tags."""
     if state_key not in st.session_state:
         st.session_state[state_key] = []
     selected = st.session_state[state_key]
-    # Add ▼ to the label
-    trigger_label = f"{label} ▼ ({len(selected)})" if selected else f"{label} ▼"
+    trigger_label = f"{label} ({len(selected)})" if selected else label
     with st.popover(trigger_label, use_container_width=True):
         new_selected = list(selected)
         for opt in options:
