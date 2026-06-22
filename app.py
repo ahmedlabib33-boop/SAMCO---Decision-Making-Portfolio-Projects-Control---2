@@ -347,69 +347,6 @@ def checkbox_filter_popover(label: str, options: list, state_key: str, value_lab
 
 
 def render_decision_dashboard(registry: pd.DataFrame, root: Path):
-    # ---- filter bar: Sector -> Projects (Program) -> Status, then date range ----
-    with st.container(border=True):
-        f1, f2, f3, f4, f5 = st.columns([1.2, 1.2, 1.5, 1, 1])
-        sectors = sorted(registry["sector"].dropna().unique().tolist())
-        programs = sorted(registry["program"].dropna().unique().tolist())
-        statuses = sorted(registry["status"].dropna().unique().tolist())
-
-        with f1:
-            sel_sector = checkbox_filter_popover("Sector", sectors, "filter_sector")
-        with f2:
-            sel_program = checkbox_filter_popover("Projects", programs, "filter_program")
-        with f3:
-            sel_status = checkbox_filter_popover("Status", statuses, "filter_status", sty.STATUS_LABELS)
-        with f4:
-            start_date = st.date_input("From", value=None, label_visibility="collapsed", format="YYYY-MM-DD")
-        with f5:
-            end_date = st.date_input("To", value=None, label_visibility="collapsed", format="YYYY-MM-DD")
-
-        bb1, bb2, bb3, _ = st.columns([1, 1, 1, 6])
-        with bb1:
-            reset = st.button("↺ Reset", use_container_width=True)
-        with bb2:
-            csv_clicked_placeholder = st.empty()
-        with bb3:
-            xlsx_clicked_placeholder = st.empty()
-
-    if reset:
-        st.session_state.filter_sector = []
-        st.session_state.filter_program = []
-        st.session_state.filter_status = []
-        st.rerun()
-
-    df = registry.copy()
-    if sel_sector:
-        df = df[df["sector"].isin(sel_sector)]
-    if sel_program:
-        df = df[df["program"].isin(sel_program)]
-    if sel_status:
-        df = df[df["status"].isin(sel_status)]
-    if start_date:
-        df = df[df["start_date"] >= pd.Timestamp(start_date)]
-    if end_date:
-        df = df[df["finish_date"] <= pd.Timestamp(end_date)]
-
-    with csv_clicked_placeholder:
-        st.download_button("⬇ CSV", df.to_csv(index=False).encode("utf-8"),
-                            "samco_projects.csv", "text/csv", use_container_width=True)
-    with xlsx_clicked_placeholder:
-        try:
-            import io
-            buf = io.BytesIO()
-            with pd.ExcelWriter(buf, engine="openpyxl") as writer:
-                df.to_excel(writer, index=False, sheet_name="Projects")
-            st.download_button("⬇ Excel", buf.getvalue(), "samco_projects.xlsx",
-                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                use_container_width=True)
-        except ImportError:
-            st.caption("Install `openpyxl` for Excel export")
-
-    if df.empty:
-        st.markdown(sty.empty_state("No projects match these filters", "Adjust filters above."), unsafe_allow_html=True)
-        return
-
     # ---- view mode pills ----
     vc1, vc2, vc3, _ = st.columns([1.3, 1.2, 1.4, 5])
     with vc1:
@@ -428,6 +365,82 @@ def render_decision_dashboard(registry: pd.DataFrame, root: Path):
             st.session_state.view_mode = "Program Comparison"
             st.rerun()
     view_mode = st.session_state.view_mode
+
+    # ------------------------------------------------------------------
+    # FILTER BAR - now placed between view mode pills and KPI grid
+    # Filter visibility depends on view_mode.
+    # ------------------------------------------------------------------
+    sectors = sorted(registry["sector"].dropna().unique().tolist())
+    programs = sorted(registry["program"].dropna().unique().tolist())
+    statuses = sorted(registry["status"].dropna().unique().tolist())
+
+    with st.container(border=True):
+        # Determine which filter columns to show
+        if view_mode == "Overall Portfolio":
+            # Show Sector, Projects, Status, date range
+            f1, f2, f3, f4, f5 = st.columns([1.2, 1.2, 1.5, 1, 1])
+            with f1:
+                sel_sector = checkbox_filter_popover("Sector", sectors, "filter_sector")
+            with f2:
+                sel_program = checkbox_filter_popover("Projects", programs, "filter_program")
+            with f3:
+                sel_status = checkbox_filter_popover("Status", statuses, "filter_status", sty.STATUS_LABELS)
+            with f4:
+                start_date = st.date_input("From", value=None, label_visibility="collapsed", format="YYYY-MM-DD")
+            with f5:
+                end_date = st.date_input("To", value=None, label_visibility="collapsed", format="YYYY-MM-DD")
+        elif view_mode == "Sector Analysis":
+            # Show only Sector, Status, date range
+            f1, f2, f3, f4 = st.columns([1.2, 1.5, 1, 1])
+            with f1:
+                sel_sector = checkbox_filter_popover("Sector", sectors, "filter_sector")
+            with f2:
+                sel_status = checkbox_filter_popover("Status", statuses, "filter_status", sty.STATUS_LABELS)
+            with f3:
+                start_date = st.date_input("From", value=None, label_visibility="collapsed", format="YYYY-MM-DD")
+            with f4:
+                end_date = st.date_input("To", value=None, label_visibility="collapsed", format="YYYY-MM-DD")
+            # Clear program filter when not used
+            st.session_state.filter_program = []
+        else:  # Program Comparison
+            # Show only Projects, Status, date range
+            f1, f2, f3, f4 = st.columns([1.2, 1.5, 1, 1])
+            with f1:
+                sel_program = checkbox_filter_popover("Projects", programs, "filter_program")
+            with f2:
+                sel_status = checkbox_filter_popover("Status", statuses, "filter_status", sty.STATUS_LABELS)
+            with f3:
+                start_date = st.date_input("From", value=None, label_visibility="collapsed", format="YYYY-MM-DD")
+            with f4:
+                end_date = st.date_input("To", value=None, label_visibility="collapsed", format="YYYY-MM-DD")
+            # Clear sector filter when not used
+            st.session_state.filter_sector = []
+
+    # ---- Apply filters to dataframe ----
+    df = registry.copy()
+    # Sector filter (if present)
+    if view_mode in ("Overall Portfolio", "Sector Analysis"):
+        sel_sector = st.session_state.get("filter_sector", [])
+        if sel_sector:
+            df = df[df["sector"].isin(sel_sector)]
+    # Program filter (if present)
+    if view_mode in ("Overall Portfolio", "Program Comparison"):
+        sel_program = st.session_state.get("filter_program", [])
+        if sel_program:
+            df = df[df["program"].isin(sel_program)]
+    # Status filter (always present)
+    sel_status = st.session_state.get("filter_status", [])
+    if sel_status:
+        df = df[df["status"].isin(sel_status)]
+    # Date filters (always present)
+    if start_date:
+        df = df[df["start_date"] >= pd.Timestamp(start_date)]
+    if end_date:
+        df = df[df["finish_date"] <= pd.Timestamp(end_date)]
+
+    if df.empty:
+        st.markdown(sty.empty_state("No projects match these filters", "Adjust filters above."), unsafe_allow_html=True)
+        return
 
     # ---- KPIs (icons + real, derived deltas - never fabricated) ----
     kpis = dl.compute_portfolio_kpis(df)
